@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const UserModel = require('../models/user');
 
 const create = async (req, res, next) => {
@@ -8,7 +9,7 @@ const create = async (req, res, next) => {
             email: req.body.email,
             password: req.body.password
         })
-        res.josn({
+        res.json({
             Status: 'success',
             message: "User added successful"
         })
@@ -29,7 +30,7 @@ const authenticate = async (req, res, next) => {
             }, 'secretkey', {
                 expiresIn: '1h'
             });
-            res.josn({
+            res.json({
                 status: "success",
                 message: "User found",
                 data: {
@@ -38,14 +39,14 @@ const authenticate = async (req, res, next) => {
                 }
             })
         } else {
-            res.josn({
+            res.json({
                 status: 'error',
                 message: "invalid email and password"
             })
         }
 
     } else {
-        res.josn({
+        res.json({
             status: 'error',
             message: "invalid email and password"
         })
