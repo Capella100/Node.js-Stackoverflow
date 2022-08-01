@@ -1,11 +1,31 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const posts = require('./routes/Post');
+const users = require('./routes/users');
+const jwt = require('jsonwebtoken');
 const app = express();
 
 const PORT = process.env.PORT || 8000;
 
-app.use(bodyParser.json())
+const validateUser = (req, res, next) => {
+    const decodedPayload = jwt.verify(req.headers['x-access-token'], 'secretkey')
+    if (decodedPayload) {
+        req.body.userId = decodedPayload.id
+        next();
+    } else {
+        res.json({
+            status: "error",
+            message: "user not validated"
+        })
+    }
+}
+
+app.use(bodyParser.json());
+app.use('/posts', posts);
+app.use('/users', validateUser, users);
+
+
 
 
 async function connect() {

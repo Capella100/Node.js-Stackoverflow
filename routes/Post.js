@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-const postControllers = require('../models/post');
+const postControllers = require('../controllers/posts');
 
 
 
 
-router.get('/posts', postControllers.getAll);
+router.get('/', postControllers.getAll);
 
-router.get('/posts/:id', postControllers.getById);
+router.get('/:id', postControllers.getById);
 
-router.post('/posts', postControllers.create);
+router.post('/', postControllers.create);
 
 router.put('/postId', postControllers.updateById);
 

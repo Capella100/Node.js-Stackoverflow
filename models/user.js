@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 // creating a user schema
-const UserSchema = mongoose.schema({
+const UserSchema = mongoose.Schema({
     name: {
         type: String,
         trim: true,
@@ -23,7 +23,8 @@ const UserSchema = mongoose.schema({
     },
 });
 // using bcrypt to hash password
-userSchema.pre('save', (next) => {
+UserSchema.pre('save', function (next) {
+    console.log("this", this)
     this.password = bcrypt.hashSync(this.password, saltRounds);
     next();
 })
